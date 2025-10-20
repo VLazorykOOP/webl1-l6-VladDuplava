@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ім'я Прізвище Студента">
+    <title>Новини "Аксес-Тех"</title>
+    
+    <style type="text/css" media="screen">
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { width: 90%; margin: auto; overflow: hidden; }
+        #main-header { background: #333; color: #fff; padding: 20px; text-align: center; }
+        .news-article { background: #f4f4f4; border: 1px solid #ccc; margin-bottom: 15px; padding: 10px; }
+        .sidebar { float: right; width: 30%; padding: 10px; background: #eee; }
+        .main-content { float: left; width: 65%; }
+        .clearfix::after { content: ""; display: table; clear: both; }
+        .highlight { color: blue; font-weight: bold; }
+        .old-price { color: red; }
+        .new-price { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <h1>Новини нашої фірми</h1>
+    </header>
+
+    <div style="background-color: #f0f0f0; padding: 10px;">
+        <strong>Навігація:</strong>
+        <a href="author.html">Про автора</a> |
+        <a href="firm.html">Про фірму</a> |
+        <a href="news.html">Новини</a>
+    </div>
+
+    <div class="container clearfix">
+        
+        <div class="main-content">
+            
+            <article class="news-article" id="article-1">
+                <h2 title="Нове надходження">Велика поставка механічних клавіатур!</h2>
+                <p>
+                    <span class="highlight">Увага!</span> 
+                    Ми отримали нову партію клавіатур "ByteMech 2000".
+                    Стара ціна: <del class="old-price">2500 грн</del>.
+                    Нова ціна: <ins datetime="2025-10-20" class="new-price">2200 грн</ins>!
+                </p>
+                <p>
+                    Формула успіху проста: H<sub style="color: blue;">2</sub>O + Кава<sup><a href="#note1">1</a></sup> = Продуктивність.
+                </p>
+                <p>
+                    Наш менеджер сказав: <bdo dir="rtl">!теувітарп ец</bdo> (це працює!).
+                </p>
+                <p>
+                    Не пропустіть шанс...<wbr>купити найкраще!
+                </p>
+            </article>
+
+            <article class="news-article" id="article-2">
+                <h2 title="Акція">Акція на ігрові миші</h2>
+                <p>
+                    Тільки цього тижня знижка на модель 
+                    <ruby>
+                        X-Fang <rt> (Ікс-Фанг) </rt>
+                    </ruby>
+                    до 30%!
+                </p>
+                
+                <img src="https://via.placeholder.com/400x200.png?text=Акційні+товари" 
+                     alt="Акція" 
+                     usemap="#productmap" 
+                     height="200" 
+                     vspace="10"
+                     class="promo-image">
+                
+                <map name="productmap" id="product_map_1">
+                    <area shape="rect" coords="0,0,200,200" href="firm.html" 
+                          alt="Клавіатури" 
+                          target="_blank" 
+                          lang="uk"
+                          title="Перейти до клавіатур">
+                    <area shape="circle" coords="300,100,80" href="news.html" 
+                          alt="Миші" 
+                          target="_self"
+                          lang="uk"
+                          title="Перезавантажити новини">
+                </map>
+            </article>
+        </div>
+
+        <aside class="sidebar" 
+               id="sidebar-main" 
+               style="border-left: 3px solid #333;" 
+               tabindex="0"
+               accesskey="s"
+               onblur="console.log('Sidebar lost focus')">
+            <h3>Архіви</h3>
+            <ul>
+                <li>Жовтень 2025</li>
+                <li>Вересень 2025</li>
+                <li>Серпень 2025</li>
+            </ul>
+            <p>(Натисніть Alt+S, щоб перейти сюди)</p>
+        </aside>
+
+    </div> <footer style="text-align: center; font-size: 12px; margin-top: 20px;">
+        <p>
+            <i>Розробка: (Ваше Прізвище та Ім'я)</i>
+        </p>
+    </footer>
+
+</body>
+</html>
