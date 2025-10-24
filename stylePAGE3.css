@@ -1,0 +1,69 @@
+/* news.css - Окремі стилі для сторінки "Новини" */
+
+/* --- Загальні стилі --- */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 15px;
+    background-color: #f9f9f9;
+}
+
+/* Навігація */
+.navigation {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Футер */
+.footer-text {
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+/* --- Унікальні стилі для news.html --- */
+
+h1 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Контейнер для окремої новини */
+.news-item {
+    background-color: #ffffff; /* Білий фон для новини */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px; /* Відступ між новинами */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Легка тінь */
+}
+
+/* Заголовок новини */
+.news-item h2 {
+    margin-top: 0;
+    color: #0056b3; /* Синій колір заголовку */
+}
+
+/* Дата публікації */
+.news-item .date {
+    color: #777;
+    font-size: 0.9em;
+    text-align: right;
+    margin-bottom: 0;
+}
+
+/* Посилання всередині новин */
+.news-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+.news-item a:hover {
+    text-decoration: underline;
+}
