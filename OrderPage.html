@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Дуплава Владислав">
+    <title>Введення даних про товар</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+    <!-- Навігація -->
+    <div class="navigation">
+        <strong>Навігація:</strong>
+        <a href="author.html">Про автора</a> |
+        <a href="firm.html">Про фірму</a> |
+        <a href="news.html">Новини</a> |
+        <a href="prices.html">Таблиці</a> |
+        <a href="order.html" class="active">Форма (Лаб 5)</a>
+    </div>
+
+    <h1>Додавання нового товару / Замовлення</h1>
+    
+    <p>На цій сторінці ви можете ввести інформацію про комплектуючі або оформити замовлення.</p>
+
+    <!-- 
+      ТЕГ <form> з атрибутами згідно варіанту:
+      autocomplete, action, class, dir, style, lang
+    -->
+    <form action="https://httpbin.org/post" 
+          method="post" 
+          autocomplete="on" 
+          class="order-form" 
+          dir="ltr" 
+          style="border: 1px solid #ccc; padding: 20px;" 
+          lang="uk">
+
+        <!-- Група 1: Контактна інформація -->
+        <!-- ТЕГ <fieldset> та <legend> -->
+        <fieldset>
+            <legend lang="uk" title="Ваші дані" dir="ltr">Контактна інформація</legend>
+
+            <!-- ТЕГ <label> з id, form, title -->
+            <label id="lbl-search" form="main-form" title="Пошук клієнта">Пошук клієнта:</label>
+            <!-- input type="search", autofocus -->
+            <input type="search" name="client_search" placeholder="Знайти в базі..." autofocus>
+            <br><br>
+
+            <label title="Ваш телефон">Телефон (type='tel'):</label>
+            <!-- input type="tel", autocomplete -->
+            <input type="tel" name="phone" autocomplete="tel" placeholder="+380...">
+            <br><br>
+
+            <label>Email (type='email', multiple):</label>
+            <!-- input type="email", multiple -->
+            <input type="email" name="email" multiple placeholder="mail1@ex.com, mail2@ex.com">
+            <br><br>
+
+            <label>Ваш сайт (type='url'):</label>
+            <!-- input type="url" -->
+            <input type="url" name="website" placeholder="https://mysite.com">
+        </fieldset>
+        <br>
+
+        <!-- Група 2: Характеристики товару (Згідно Таблиці 1, Вар 5) -->
+        <fieldset>
+            <legend>Деталі комп'ютерних аксесуарів</legend>
+
+            <h3>Графічний адаптер</h3>
+            <label>Пам'ять (ГБ):</label>
+            <!-- input з атрибутами step, min, value -->
+            <input type="number" name="gpu_memory" step="2" min="2" value="4">
+            
+            <!-- ТЕГ <meter> (Візуалізація потужності) -->
+            <span>Рейтинг потужності:</span>
+            <meter class="power-meter" title="Рейтинг" min="0" max="100" high="80" value="85"></meter>
+            <br><br>
+
+            <h3>Пристрій CDROM/CDRW</h3>
+            <label>Виробник:</label>
+            <!-- ТЕГ <optgroup> -->
+            <select name="cdrom_maker">
+                <optgroup label="Популярні" style="color: navy;" class="bold-opt" id="group1">
+                    <option value="asus">Asus</option>
+                    <option value="lg">LG</option>
+                </optgroup>
+                <optgroup label="Інші">
+                    <option value="liteon">Lite-On</option>
+                </optgroup>
+            </select>
+            <br><br>
+
+            <h3>Вінчестер</h3>
+            <!-- input з атрибутом checked (для checkbox) -->
+            <label><input type="checkbox" name="is_ssd" checked> Це SSD?</label>
+            <br>
+            <label>Об'єм (ТБ):</label>
+            <!-- input з maxlength (хоча для number краще max, але в завданні maxlength) -->
+            <input type="text" name="hdd_size" maxlength="5" style="width: 50px;">
+        </fieldset>
+        <br>
+
+        <!-- Група 3: Дата та час -->
+        <fieldset>
+            <legend>Терміни</legend>
+            
+            <label>Тиждень поставки (type='week'):</label>
+            <input type="week" name="delivery_week">
+            <br><br>
+
+            <label>Місяць випуску (type='month'):</label>
+            <input type="month" name="release_month">
+        </fieldset>
+        <br>
+
+        <!-- Група 4: Додатково -->
+        <fieldset>
+            <legend>Коментар та Підтвердження</legend>
+
+            <!-- ТЕГ <textarea> з атрибутами required, dirname, disabled (один для прикладу) -->
+            <label>Коментар (обов'язково):</label><br>
+            <textarea name="comment" 
+                      required 
+                      dirname="comment.dir" 
+                      lang="uk" 
+                      title="Введіть текст" 
+                      class="styled-area"
+                      style="width: 100%; height: 80px;"></textarea>
+            <br>
+            
+            <label>Поле для адміністратора (disabled):</label><br>
+            <textarea name="admin_note" disabled>Тільки для читання</textarea>
+            <br><br>
+
+            <!-- ТЕГ <progress> -->
+            <label>Завантаження форми:</label>
+            <progress id="form-prog" max="100" value="70" lang="en"></progress>
+            <br><br>
+
+            <!-- ТЕГ <keygen> (Застарілий, але є в завданні) -->
+            <label>Ключ безпеки (keygen):</label>
+            <keygen name="security" id="key1" dir="ltr" form="main-form" style="border:1px solid red;">
+        </fieldset>
+
+        <!-- ТЕГ <summary> (зазвичай всередині details, але можна використати як блок) -->
+        <details>
+            <summary title="Натисніть для деталей" class="info-summary" id="sum1">
+                Правила заповнення форми (Натисніть тут)
+            </summary>
+            <p>Заповніть всі обов'язкові поля.</p>
+        </details>
+        <br>
+
+        <!-- Кнопки -->
+        <!-- input type='submit' з formtarget -->
+        <input type="submit" value="Відправити замовлення" formtarget="_blank" class="btn-submit">
+        
+        <!-- ТЕГ <button> з атрибутами form, type, name, disabled -->
+        <button type="button" form="main-form" name="btn_cancel" disabled>Скасувати (Неактивно)</button>
+        
+        <input type="reset" value="Очистити" alt="Кнопка очищення">
+
+    </form>
+
+    <p class="footer-text">
+        <i>Розробка: Дуплава Владислав</i>
+    </p>
+
+</body>
+</html>
