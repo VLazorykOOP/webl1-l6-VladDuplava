@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Дуплава Владислав">
+    <title>Прайс-лист "Аксес-Тех"</title>
+    
+    <link rel="stylesheet" href="task.css">
+</head>
+<body>
+
+    <div class="navigation">
+        <strong>Навігація:</strong>
+        <a href="author.html">Про автора</a> |
+        <a href="firm.html">Про фірму</a> |
+        <a href="news.html">Новини</a> |
+        <a href="prices.html" class="active">Таблиці (Лаб 3)</a>
+    </div>
+
+    <h1>Товари та ціни</h1>
+
+    <h2>Популярні товари</h2>
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Назва товару</th>
+                <th>Категорія</th>
+                <th>Ціна (грн)</th>
+                <th>Наявність</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Миша Logitech G102</td>
+                <td>Миші</td>
+                <td>999</td>
+                <td>Є в наявності</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Клавіатура HyperX Alloy</td>
+                <td>Клавіатури</td>
+                <td>3500</td>
+                <td>Закінчується</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Навушники Razer Kraken</td>
+                <td>Аудіо</td>
+                <td>2200</td>
+                <td>Є в наявності</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Килимок SteelSeries XXL</td>
+                <td>Аксесуари</td>
+                <td>800</td>
+                <td>Під замовлення</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">Ціни актуальні на 20.11.2025</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <br><hr><br>
+
+    <h2>Детальні характеристики (Структура Варіант №5)</h2>
+    <p>Ця таблиця побудована з використанням <code>rowspan</code> та <code>colspan</code> згідно геометричної схеми.</p>
+
+    <table class="complex-table">
+        <tr>
+            <th rowspan="2" class="col-left">Категорія</th>
+            <th rowspan="2" class="col-mid">Модель</th>
+            <th colspan="2" class="col-right">Специфікації</th>
+        </tr>
+        <tr>
+            <td>Основні</td>
+            <td>Додаткові</td>
+        </tr>
+
+        <tr>
+            <td>Миші</td>
+            <td>Logitech MX</td>
+            <td>Бездротова</td>
+            <td>Bluetooth</td>
+        </tr>
+
+        <tr>
+            <td>Миші</td>
+            <td>Razer DeathAdder</td>
+            <td>Дротова</td>
+            <td>RGB Lights</td>
+        </tr>
+
+        <tr>
+            <td>Клавіатури</td>
+            <td>Keychron K2</td>
+            <td>Механіка</td>
+            <td>Hot-swap</td>
+        </tr>
+
+        <tr>
+            <td>Клавіатури</td>
+            <td>Apple Magic</td>
+            <td>Мембрана</td>
+            <td>Slim</td>
+        </tr>
+
+        <tr>
+            <td rowspan="2">Монітори</td>
+            <td rowspan="2">Dell UltraSharp</td>
+            <td>4K</td>
+            <td>IPS матриця</td>
+        </tr>
+        <tr>
+            <td>60Hz</td>
+            <td>USB-C Hub</td>
+        </tr>
+
+        <tr>
+            <td rowspan="2">Навушники</td>
+            <td rowspan="2">Sony WH-1000</td>
+            <td>Noise Cancel</td>
+            <td>30 годин</td>
+        </tr>
+        <tr>
+            <td>LDAC</td>
+            <td>Чохол</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b>Разом</b></td>
+            <td colspan="2">Всі товари сертифіковані</td>
+        </tr>
+    </table>
+
+    <p class="footer-text">
+        <i>Розробка: Дуплава Владислав</i>
+    </p>
+
+</body>
+</html>
