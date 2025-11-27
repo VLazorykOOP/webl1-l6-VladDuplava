@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна 7 - Події</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        
+        /* Стиль для віконця з логами (справа знизу) */
+        .log-box {
+            position: fixed; bottom: 10px; right: 10px; width: 300px; height: 250px;
+            background: #f8f9fa; border: 2px solid #333; overflow-y: scroll;
+            padding: 10px; font-size: 12px; z-index: 1000;
+            box-shadow: -4px -4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Стиль для інтерактивних елементів */
+        .interactive-element {
+            padding: 15px; margin: 15px 0; border: 2px dashed #007bff;
+            transition: 0.3s; cursor: pointer; width: fit-content; border-radius: 5px;
+        }
+
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+
+        .output-box {
+            margin-top: 10px; border: 1px solid #ccc; padding: 10px; background: #fffbe6;
+        }
+    </style>
+</head>
+
+<body 
+    onload="logEvent('Завдання 1: Сторінка завантажена (onload)')"
+    onbeforeprint="logEvent('Завдання 1: Друк (onbeforeprint)')"
+    onoffline="logEvent('Завдання 1: Інтернет зник (onoffline)')"
+    ononline="logEvent('Завдання 1: Інтернет з\'явився (ononline)')"
+>
+
+    <div id="logger" class="log-box"><strong>Журнал подій:</strong><br></div>
+
+    <h1>Завдання 1 та 2: Події</h1>
+    <p><i>Дивіться у віконце справа знизу, там з'являтимуться повідомлення.</i></p>
+
+    <h2 class="interactive-element" id="myH2">
+        1. Клікни або наведи на мене (H2)
+    </h2>
+
+    <p>
+        <b class="interactive-element" id="myBold">
+           2. Натисни кнопку миші тут (B)
+        </b>
+    </p>
+    
+    <p>
+        <i class="interactive-element" id="myItalic">
+           3. Клікни правою кнопкою тут (I)
+        </i>
+    </p>
+
+    <hr>
+    
+    <h3>Завдання 3.5: Властивості document</h3>
+    <button onclick="showDocProperties()">Показати властивості</button>
+    <div id="docPropsOutput" class="output-box"></div>
+
+    <script>
+        // --- ФУНКЦІЯ ДЛЯ ЗАПИСУ В ЖУРНАЛ ---
+        function logEvent(text) {
+            const logger = document.getElementById('logger');
+            const time = new Date().toLocaleTimeString();
+            logger.innerHTML += `[${time}] ${text}<br>`;
+            logger.scrollTop = logger.scrollHeight; // Прокрутка вниз
+            console.log(text);
+        }
+
+        // --- ЗАВДАННЯ 2: ОБРОБКА ПОДІЙ ЕЛЕМЕНТІВ ---
+        
+        // 1. H2 (Заголовок)
+        const h2 = document.getElementById('myH2');
+        h2.onclick = function() { 
+            this.style.color = 'red'; 
+            logEvent('H2: Клік (onclick) -> колір червоний'); 
+        };
+        h2.ondblclick = function() { 
+            this.style.backgroundColor = 'yellow'; 
+            logEvent('H2: Подвійний клік (ondblclick) -> фон жовтий'); 
+        };
+        h2.onmouseover = function() { 
+            this.style.borderColor = 'red'; 
+            logEvent('H2: Мишка наведена (onmouseover)'); 
+        };
+        h2.onmouseout = function() { 
+            this.style.borderColor = '#007bff'; 
+            logEvent('H2: Мишка пішла (onmouseout)'); 
+        };
+
+        // 2. B (Жирний текст)
+        const b = document.getElementById('myBold');
+        b.onmousedown = function() {
+            this.style.fontSize = '24px';
+            logEvent('B: Кнопка натиснута (onmousedown) -> збільшення');
+        };
+        b.onmouseup = function() {
+            this.style.fontSize = '16px';
+            logEvent('B: Кнопка відпущена (onmouseup) -> зменшення');
+        };
+
+        // 3. I (Курсив)
+        const i = document.getElementById('myItalic');
+        i.oncontextmenu = function(event) {
+            event.preventDefault(); // Блокуємо стандартне меню
+            alert('Спрацював правий клік!');
+            logEvent('I: Правий клік (oncontextmenu)');
+        };
+
+        // --- ЗАВДАННЯ 3.5: ВЛАСТИВОСТІ DOCUMENT ---
+        function showDocProperties() {
+            const out = document.getElementById('docPropsOutput');
+            out.innerHTML = `
+                <b>URL:</b> ${document.URL} <br>
+                <b>Заголовок (Title):</b> ${document.title} <br>
+                <b>Останні зміни:</b> ${document.lastModified} <br>
+                <b>Кодування:</b> ${document.characterSet} <br>
+                <b>Ширина вікна:</b> ${window.innerWidth}px
+            `;
+            logEvent('Показано властивості document');
+        }
+
+        // Додаткові події вікна
+        window.onblur = () => logEvent('Вікно не активне (onblur)');
+        window.onfocus = () => logEvent('Вікно активне (onfocus)');
+    </script>
+</body>
+</html>
