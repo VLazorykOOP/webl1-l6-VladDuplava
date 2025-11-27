@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Дуплава Владислав">
+    <title>Canvas Графіка (Лаб 6 - JS версія)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .navigation {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 10px;
+            font-weight: 500;
+        }
+
+        .navigation a.active {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .canvas-container {
+            display: inline-block;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        canvas {
+            border: 1px solid #eee;
+            background-color: #fff; /* Фон полотна */
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navigation">
+        <strong>Навігація:</strong>
+        <a href="#">Про автора</a> |
+        <a href="#">Про фірму</a> |
+        <a href="#">Новини</a> |
+        <a href="#">Таблиці</a> |
+        <a href="#">Форма</a> |
+        <a href="#" class="active">Canvas (JS)</a>
+    </div>
+
+    <h1>Робота з Canvas API (JavaScript)</h1>
+    <p>Варіант №5: Відтворення SVG через JS + Анімації</p>
+
+    <div class="canvas-container">
+        <canvas id="myCanvas" width="600" height="400"></canvas>
+    </div>
+
+    <p class="footer-text">
+        <i>Розробка: Дуплава Владислав</i>
+    </p>
+
+    <script>
+        // 1. ІНІЦІАЛІЗАЦІЯ CANVAS
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Константи для координатної системи
+        const ORIGIN_X = 150; // Центр координат X на екрані
+        const ORIGIN_Y = 150; // Центр координат Y на екрані
+        const SCALE = 40;     // 1 одиниця = 40 пікселів
+
+        // Функція для запуску анімації
+        function animate() {
+            // Очищаємо полотно перед кожним кадром
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Отримуємо поточний час для анімацій (в секундах)
+            const time = Date.now() / 1000;
+
+            // Малюємо сітку та осі
+            drawGridAndAxes();
+
+            // Малюємо текст по кривій (імітація)
+            drawCurvedText();
+
+            // --- МАЛЮВАННЯ ФІГУР ---
+            
+            // Загальні стилі для фігур
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+
+            // 1. Коло 1 (Зліва, анімація кольору)
+            // Центр: (-1.5, 1.5) -> Screen: x=90, y=90
+            // Анімація: Blue -> Red -> Blue
+            // Math.sin дає значення від -1 до 1. Ми перетворюємо це в 0..255 для червоного каналу.
+            const colorOscillation = Math.abs(Math.sin(time * 1.5)); // Швидкість ~ 4s цикл
+            const redVal = Math.floor(colorOscillation * 255);
+            const blueVal = 255 - redVal;
+            
+            ctx.fillStyle = `rgb(${redVal}, 0, ${blueVal})`;
+            ctx.beginPath();
+            ctx.arc(90, 90, 40, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // 2. Прямокутник під колом (Анімація Skew/Перекручування)
+            // Початкова позиція x=30, y=150
+            ctx.save(); // Зберігаємо стан (щоб skew не вплинув на інші фігури)
+            ctx.translate(30, 150); // Переносимо початок координат в точку малювання прямокутника
+            
+            // Skew анімація: змінюємо нахил по X. values="0;20;0;-20;0"
+            // Використовуємо Math.sin для плавної зміни кута
+            const skewAngle = Math.sin(time * 2) * 0.35; // ~20 градусів в радіанах
+            ctx.transform(1, 0, skewAngle, 1, 0, 0); // Матриця трансформації для skewX
+            
+            ctx.fillStyle = "blue";
+            ctx.fillRect(0, 0, 80, 40); // Малюємо від 0,0 бо ми вже зробили translate
+            ctx.strokeRect(0, 0, 80, 40);
+            ctx.restore(); // Відновлюємо стан координат
+
+            // 3. Коло 2 (По центру, статичне)
+            // Центр (1.5, 1.5) -> Screen: x=210, y=90
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            ctx.arc(210, 90, 40, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // 4. Квадрат малий зверху (Анімація Scale/Розмір)
+            // Центр квадрата для масштабування: x=250, y=50 (середина квадрата 230+20, 30+20)
+            ctx.save();
+            ctx.translate(250, 50); // Переносимо в центр квадрата
+            const scaleVal = 1 + Math.abs(Math.sin(time * 3) * 0.5); // Масштаб від 1 до 1.5
+            ctx.scale(scaleVal, scaleVal);
+            
+            ctx.fillStyle = "blue";
+            // Малюємо зі зміщенням -20, щоб центр був в точці translate
+            ctx.fillRect(-20, -20, 40, 40); 
+            ctx.strokeRect(-20, -20, 40, 40);
+            ctx.restore();
+
+            // 5. Квадрат малий (праворуч від кола) - Статичний
+            // x=270, y=70
+            ctx.fillStyle = "blue";
+            ctx.fillRect(270, 70, 40, 40);
+            ctx.strokeRect(270, 70, 40, 40);
+
+            // 6. Ромб (по центру внизу) - Анімація Rotate/Обертання
+            // Центр обертання x=270, y=190
+            ctx.save();
+            ctx.translate(270, 190);
+            const rotationAngle = time * (360 / 5) * (Math.PI / 180); // Повний оберт за 5 сек
+            ctx.rotate(rotationAngle);
+            
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            // Малюємо ромб відносно центру (0,0 в новій системі)
+            // Оригінальні точки відносно центру 270,190: (-40,0), (0,-40), (40,0), (0,40)
+            ctx.moveTo(-40, 0);
+            ctx.lineTo(0, -40);
+            ctx.lineTo(40, 0);
+            ctx.lineTo(0, 40);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+
+            // 7. Квадрат (зліва внизу біля осі) - Статичний
+            // x=150, y=190
+            ctx.fillStyle = "blue";
+            ctx.fillRect(150, 190, 40, 40);
+            ctx.strokeRect(150, 190, 40, 40);
+
+            // 8. Прямокутник (найнижчий) - Статичний
+            // x=190, y=230
+            ctx.fillStyle = "blue";
+            ctx.fillRect(190, 230, 80, 40);
+            ctx.strokeRect(190, 230, 80, 40);
+
+            // 9. Квадрат (крайній правий) - Анімація Translate/Переміщення
+            // x=310, y=190. Рух вниз на 50px
+            ctx.save();
+            // values="0,0; 0,50; 0,0"
+            const transY = Math.abs(Math.sin(time * 1.5)) * 50; 
+            ctx.translate(0, transY);
+            
+            ctx.fillStyle = "blue";
+            ctx.fillRect(310, 190, 40, 40);
+            ctx.strokeRect(310, 190, 40, 40);
+            ctx.restore();
+
+            // Запит наступного кадру анімації
+            requestAnimationFrame(animate);
+        }
+
+        // Допоміжна функція: Малювання осей і сітки
+        function drawGridAndAxes() {
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "black";
+
+            // Вісь X (лінія)
+            ctx.moveTo(10, 150);
+            ctx.lineTo(580, 150);
+            
+            // Вісь Y (лінія)
+            ctx.moveTo(150, 390);
+            ctx.lineTo(150, 10);
+            ctx.stroke();
+
+            // Стрілочки (Canvas не має marker-end, малюємо вручну)
+            drawArrow(580, 150, 0); // X
+            drawArrow(150, 10, -Math.PI / 2); // Y
+
+            // Підписи осей X та Y
+            ctx.fillStyle = "black";
+            ctx.font = "bold 14px Arial";
+            ctx.fillText("X", 580, 140);
+            ctx.fillText("Y", 160, 20);
+
+            // Засічки та цифри
+            ctx.font = "10px Arial";
+            ctx.textAlign = "center";
+            
+            // Цифри по X
+            const xLabels = [-3, -2, -1, 0, 1, 2, 3, 4, 5];
+            xLabels.forEach(val => {
+                let px = ORIGIN_X + (val * SCALE);
+                // Пропускаємо нуль, щоб не накладався, або зсуваємо
+                if (val !== 0) {
+                    ctx.fillText(val, px, ORIGIN_Y + 15);
+                    // Рисочка
+                    ctx.beginPath(); ctx.moveTo(px, ORIGIN_Y - 3); ctx.lineTo(px, ORIGIN_Y + 3); ctx.stroke();
+                } else {
+                     ctx.fillText(val, px + 10, ORIGIN_Y + 15);
+                }
+            });
+
+            // Цифри по Y (в Canvas Y росте вниз, тому логічні додатні Y будуть вище по екрану)
+            const yLabels = [-2, -1, 1, 2];
+            yLabels.forEach(val => {
+                let py = ORIGIN_Y - (val * SCALE);
+                ctx.fillText(val, ORIGIN_X - 15, py + 3);
+                // Рисочка
+                ctx.beginPath(); ctx.moveTo(ORIGIN_X - 3, py); ctx.lineTo(ORIGIN_X + 3, py); ctx.stroke();
+            });
+        }
+
+        // Допоміжна функція: Малювання стрілочки
+        function drawArrow(x, y, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-10, -5);
+            ctx.lineTo(-10, 5);
+            ctx.closePath();
+            ctx.fillStyle = "black";
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Допоміжна функція: Текст по кривій
+        // В Canvas немає textPath, тому малюємо криву і текст над нею вручну
+        function drawCurvedText() {
+            // Малюємо саму криву (прозору, як в SVG, або видиму для наочності)
+            // d="M 50,350 Q 300,300 550,350"
+            /* ctx.beginPath();
+            ctx.moveTo(50, 350);
+            ctx.quadraticCurveTo(300, 300, 550, 350);
+            ctx.strokeStyle = "rgba(0,0,0,0.1)"; // Ледь помітна лінія
+            ctx.stroke();
+            */
+
+            // Виведення тексту
+            // Реалізувати ідеальний textPath в Canvas складно математично.
+            // Тут ми просто виведемо текст по центру кривої з легким нахилом або просто над нею.
+            ctx.fillStyle = "darkblue";
+            ctx.font = "bold 20px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("", 300, 330);
+        }
+
+        // ЗАПУСК
+        animate();
+
+    </script>
+</body>
+</html>
