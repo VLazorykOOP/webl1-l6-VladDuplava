@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Медіа Бібліотека</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Стилі для меню (форми) - Вимога Зображення 1 та 2 */
+        aside {
+            width: 300px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        aside h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        fieldset {
+            border: 1px solid #7f8c8d;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0;
+        }
+
+        legend {
+            color: #3498db;
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Стилі для контенту - Вимога Зображення 2 */
+        main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .media-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        video, audio {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .storage-info {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <h2>Меню Бібліотеки</h2>
+        
+        <form action="#" method="get" autocomplete="on">
+            
+            <fieldset>
+                <legend>Пошук медіа</legend>
+                
+                <label for="search">Знайти файл:</label>
+                <input type="search" id="search" name="q" placeholder="Введіть назву..." autofocus>
+
+                <label for="category">Категорія:</label>
+                <select id="category" name="category">
+                    <optgroup label="Відео">
+                        <option value="films">Фільми</option>
+                        <option value="clips">Кліпи</option>
+                    </optgroup>
+                    <optgroup label="Аудіо">
+                        <option value="music">Музика</option>
+                        <option value="podcast">Подкасти</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+            <details open>
+                <summary style="cursor: pointer; margin-bottom: 10px;">Додати ресурс</summary>
+                
+                <label for="file-url">URL посилання:</label>
+                <input type="url" id="file-url" placeholder="https://example.com" required>
+
+                <label for="email">Email автора:</label>
+                <input type="email" id="email" placeholder="author@mail.com" multiple>
+
+                <label for="date-add">Місяць додавання:</label>
+                <input type="month" id="date-add">
+
+                <label>Оцінка (range):</label>
+                <input type="range" min="1" max="10" step="1" value="5" oninput="this.nextElementSibling.value = this.value">
+                <output>5</output>
+
+                <label for="desc">Опис:</label>
+                <textarea id="desc" rows="3" maxlength="200" placeholder="Короткий опис..."></textarea>
+                
+                <label><input type="checkbox" name="urgent" checked> Позначити як "Обране"</label>
+                
+                <button type="submit" formtarget="_blank">Зберегти</button>
+                <input type="reset" value="Очистити форму" style="background-color: #c0392b; color: white; margin-top: 5px; cursor:pointer;">
+            </details>
+
+            <div class="storage-info">
+                <label>Заповнення диску:</label>
+                <progress value="70" max="100"></progress>
+                <small>70% використано</small>
+
+                <br><br>
+                <label>Якість з'єднання:</label>
+                <meter min="0" max="100" low="30" high="80" optimum="90" value="85"></meter>
+            </div>
+            
+            </form>
+    </aside>
+
+    <main>
+        <h1>Мій Медіа Каталог</h1>
+        
+        <div class="media-grid">
+            <div class="media-card">
+                <h3>Природа (Video)</h3>
+                <p>Приклад використання тега video.</p>
+                <video controls poster="https://via.placeholder.com/300x170?text=Video+Preview">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+                    Ваш браузер не підтримує відео.
+                </video>
+            </div>
+
+            <div class="media-card">
+                <h3>Звуки лісу (Audio)</h3>
+                <p>Приклад використання тега audio.</p>
+                <audio controls>
+                    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                    Ваш браузер не підтримує аудіо елемент.
+                </audio>
+            </div>
+
+            <div class="media-card">
+                <h3>Улюблене Шоу</h3>
+                <p>Опис: Чудовий епізод про технології.</p>
+                <video controls width="100%">
+                     <source src="movie.mp4" type="video/mp4">
+                    Відео не знайдено (потрібен локальний файл).
+                </video>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
